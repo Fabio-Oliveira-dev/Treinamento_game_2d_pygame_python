@@ -1,5 +1,7 @@
 #biblioteca
 # Importar uma função de fechar a janela que esta dentro do modulo sys
+# Sortear vcalores aleatorios
+from random import randint
 from sys import exit
 
 import pygame
@@ -14,6 +16,10 @@ largura = 640
 altura = 480
 x = largura/2
 y = altura/2
+
+# Variaveis que vão representar x e y do retangulo verde
+x_verde = randint(40,600)
+y_verde = randint(50,430)
 
 tela = pygame.display.set_mode((largura, altura))
 pygame.display.set_caption('Game BR City')
@@ -55,9 +61,9 @@ while True:
     if pygame.key.get_pressed()[K_s]:
         y = y + 20
 
-
     # fazer o desenho retangulo na tela. x,y, largura e altura
-    pygame.draw.rect(tela, (255,0,0), (x,y,40,50))
+    ret_vermelho = pygame.draw.rect(tela, (255,0,0), (x,y,40,50))
+    ret_verde = pygame.draw.rect(tela, (0,255,0), (x_verde,y_verde,40,50))
     #Desenhar um circulo x,y,raio
     #pygame.draw.circle(tela, (0,255,0), (300,260), 40)
     # Desenhar uma linha posição inicial e posisão onde termina a linha x e y e espessura
@@ -70,4 +76,9 @@ while True:
     y += 1 # Incremento da variavel para dar movimento ao objeto
     '''
 
-    pygame.display.update() # Acada iteração do jogo ela atualiza a tela do jogo
+    # metodo de sobreposição de objetos para simular colisão
+    if ret_vermelho.colliderect(ret_verde):
+        x_verde = randint(40,600)
+        y_verde = randint(50,430)
+
+    pygame.display.update() # Acada iteração do jogador com o jogo, a tela é atualiza
