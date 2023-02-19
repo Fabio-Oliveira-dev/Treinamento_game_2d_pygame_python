@@ -21,6 +21,9 @@ y = altura/2
 x_verde = randint(40,600)
 y_verde = randint(50,430)
 
+fonte = pygame.font.SysFont('verdana', 30, True, False) # Definição de fonte. Fonte, tamanho da fonte, negrito, italico
+pontos = 0
+
 tela = pygame.display.set_mode((largura, altura))
 pygame.display.set_caption('Game BR City')
 velocidade = pygame.time.Clock() # Controlar a velocidade do objeto
@@ -30,6 +33,9 @@ velocidade = pygame.time.Clock() # Controlar a velocidade do objeto
 while True:
     velocidade.tick(60) # Velocidade dos frames, medidos em frames por segundos
     tela.fill((0,0,0)) # Preencher de preto a cada iteração de incremento da veriavel y
+    mensagem = f'Pontuação: {pontos}' # Pontuação
+    texto_formatado = fonte.render(mensagem, True, (255,255,255)) # O parametro antialaise controla o serrilhamento do texto
+
     # For para detectar toda vez que um evento ocorre 
     for event in pygame.event.get():
         if event.type == QUIT:
@@ -80,5 +86,8 @@ while True:
     if ret_vermelho.colliderect(ret_verde):
         x_verde = randint(40,600)
         y_verde = randint(50,430)
+        pontos += 1
+
+    tela.blit(texto_formatado, (340,30)) # x e y. Para exibir o texto na tela
 
     pygame.display.update() # Acada iteração do jogador com o jogo, a tela é atualiza
